@@ -18,10 +18,7 @@ return new class extends Migration
 
             $table->decimal('salary',13,2);
             $table->date('date');
-
             
-
-
             $table->softDeletes();
             $table->timestamps();
         });
