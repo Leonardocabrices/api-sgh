@@ -13,7 +13,7 @@ class Education extends Model
 
     protected $fillable = [
         'instruction_level',
-        'name',
+        'institution_name',
         'especiality',
         'coursed_years',
         'start_date',
