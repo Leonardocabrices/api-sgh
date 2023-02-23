@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Analyst;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Employee;
+use App\Traits\Response;
 
 class EmployeeController extends Controller
 {
+    use Response;
+
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +18,15 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return 'Index';
+        try {
+            $employees = Employee::all();
+            
+        } catch (\Exception $e) {
+            $this->reportError($e);
+            return response()->json($this->serverError());
+        }
+        return response()->json($this->success($employees, 'employees'));
     }
-
     
 
     /**
@@ -27,7 +37,14 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        return 'store';
+        try {
+            $employee = Employee::create($request->all());
+            
+        } catch (\Exception $e) {
+            $this->reportError($e);
+            return response()->json($this->serverError());
+        }
+        return response()->json($this->success($employee, 'employee'));
     }
 
     /**
@@ -38,7 +55,14 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        return 'show';
+        try {
+            $employee = Employee::find($id);
+            
+        } catch (\Exception $e) {
+            $this->reportError($e);
+            return response()->json($this->serverError());
+        }
+        return response()->json($this->success($employee, 'employee'));
     }
 
 
@@ -51,7 +75,17 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return 'update';
+        try {
+            $employee = Employee::find($id);
+            if (!empty($employee)) {
+                $employee->update($request->all());
+            }
+            
+        } catch (\Exception $e) {
+            $this->reportError($e);
+            return response()->json($this->serverError());
+        }
+        return response()->json($this->success($employee, 'employee'));
     }
 
     /**
@@ -62,6 +96,15 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        return 'destroy';
+        try {
+            $employee = Employee::find($id);
+            if (!empty($employee)) {
+                $employee->delete();
+            }
+        } catch (\Exception $e) {
+            $this->reportError($e);
+            return response()->json($this->serverError());
+        }
+        return response()->json($this->success($employee, 'employee'));
     }
 }
