@@ -34,7 +34,7 @@ return new class extends Migration
             $table->boolean('right_handed');
             $table->decimal('height',8,2);
             $table->decimal('weight',8,2);
-            $table->string('status_civil');
+            $table->enum('status_civil',['single', 'married', 'widow']);
             $table->enum('status',['active', 'inactive']);
 
             $table->foreignId('job_id')->constrained('jobs');

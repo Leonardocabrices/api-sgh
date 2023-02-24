@@ -16,10 +16,10 @@ class Job extends Model
         'name',
         'description',
         'waiting_employees',
-        'departament_id'
+        'department_id'
     ];
 
-    public function departament (){
+    public function department (){
         return $this->belongsTo(Departament::class);
     }
 
