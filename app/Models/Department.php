@@ -8,14 +8,13 @@ use Illuminate\Database\Eloquent\{
     SoftDeletes
 };
 
-class Departament extends Model
+class Department extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name'
     ];
-
 
     public function jobs () {
         return $this->hasMany(Job::class);

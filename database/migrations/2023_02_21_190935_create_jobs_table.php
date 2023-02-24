@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('waiting_employees')->nullable();
 
-            $table->foreignId('department_id')->constrained('departaments');
+            $table->foreignId('department_id')->constrained('departments');
 
             $table->softDeletes();
             $table->timestamps();

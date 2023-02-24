@@ -36,4 +36,12 @@ trait Response {
         Log::info('Line: ' . $error->getLine());
         Log::info('===================================================');
     }
+
+    public static function validationFail($errors) {
+        return response()->json([
+        'status' => 302,
+        'message' => 'Los campos no cumplen lo requerido',
+        'detail' => $errors
+        ]);
+    }
 }
