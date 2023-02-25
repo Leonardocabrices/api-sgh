@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Analyst\EmployeeController;
 
 /*
@@ -15,14 +16,15 @@ use App\Http\Controllers\Analyst\EmployeeController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
 
-Route::prefix('analyst')->group(function () {
-    Route::get('/employees',[EmployeeController::class, 'index']);
-    Route::get('/employees/{employee}', [EmployeeController::class, 'show']);
-    Route::post('/employees',[EmployeeController::class,'store']);
-    Route::put('/employees/{employee}',[EmployeeController::class,'update']);
-    Route::delete('/employees/{employee}',[EmployeeController::class,'destroy']);
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::prefix('analyst')->group(function () {
+        Route::get('/employees',[EmployeeController::class, 'index']);
+        Route::get('/employees/{employee}', [EmployeeController::class, 'show']);
+        Route::post('/employees',[EmployeeController::class,'store']);
+        Route::put('/employees/{employee}',[EmployeeController::class,'update']);
+        Route::delete('/employees/{employee}',[EmployeeController::class,'destroy']);
+    });
 });
